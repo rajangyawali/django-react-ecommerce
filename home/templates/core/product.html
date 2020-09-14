@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block cssimport %}
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/product_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/product_responsive.css' %}">
+{% endblock cssimport %}
+{% block title %}
+	{{product.name}}
+{% endblock %}
+
+{% block body %}
+	<!-- Single Product -->
+
+	<div class="single_product">
+		<div class="container">
+			<div class="row">
+
+				<!-- Images -->
+				<div class="col-lg-2 order-lg-1 order-2">
+					<ul class="image_list">
+						<li data-image="images/single_4.jpg"><img src="{% static 'images/single_4.jpg' %}" alt=""></li>
+						<li data-image="images/single_2.jpg"><img src="{% static 'images/single_2.jpg' %}" alt=""></li>
+						<li data-image="images/single_3.jpg"><img src="{% static 'images/single_3.jpg' %}" alt=""></li>
+					</ul>
+				</div>
+
+				<!-- Selected Image -->
+				<div class="col-lg-5 order-lg-2 order-1">
+					<div class="image_selected"><img src="{% static 'images/single_4.jpg' %}" alt=""></div>
+				</div>
+
+				<!-- Description -->
+				<div class="col-lg-5 order-3">
+					<div class="product_description">
+						<div class="product_category">{{product.category}}</div>
+						<div class="product_name">{{product.name}}</div>
+						<div class="rating_r rating_r_4 product_rating"><i></i><i></i><i></i><i></i><i></i></div>
+						<div class="product_text"><p>{{product.description}}</p></div>
+						<div class="order_info d-flex flex-row">
+							<form action="#">
+								<div class="clearfix" style="z-index: 1000;">
+
+									<!-- Product Quantity -->
+									<div class="product_quantity clearfix">
+										<span>Quantity: </span>
+										<input id="quantity_input" type="text" pattern="[0-9]*" value={{quantity}}>
+										<div class="quantity_buttons">
+											<a href="{% url 'core:update-product' product.slug 'add' %}"><div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div></a>
+											<a href="{% url 'core:update-product' product.slug 'subtract' %}"><div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fas fa-chevron-down"></i></div></a>
+										</div>
+									</div>
+
+									<!-- Product Color -->
+									<ul class="product_color">
+										<li>
+											<span>Color: </span>
+											<div class="color_mark_container"><div id="selected_color" class="color_mark"></div></div>
+											<div class="color_dropdown_button"><i class="fas fa-chevron-down"></i></div>
+
+											<ul class="color_list">
+												<li><div class="color_mark" style="background: #999999;"></div></li>
+												<li><div class="color_mark" style="background: #b19c83;"></div></li>
+												<li><div class="color_mark" style="background: #000000;"></div></li>
+											</ul>
+										</li>
+									</ul>
+
+								</div>
+
+								<div class="product_price">${{product.price}}</div>
+								<div class="button_container">
+									{% if quantity >= 1 %}
+									<a href={{product.get_remove_from_cart_url}} class="btn btn-danger">Remove from Cart</a>
+									{% else %}
+									<a href={{product.get_add_to_cart_url}} class="btn btn-primary">Add to Cart</a>
+									{% endif %}
+									<div class="product_fav"><i class="fas fa-heart"></i></div>
+								</div>
+								<div class="button_container">
+									<a href="{% url 'home' %}" class="btn btn-primary">Continue Shopping</a>
+									<a href="{% url 'core:order-summary' %}" class="btn btn-secondary">Go to Cart</a>
+									</div>
+								
+							</form>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+{% endblock body %}
+
+{% block jsimport %}
+	<script src="{% static 'js/product_custom.js' %}"></script>
+{% endblock jsimport %}

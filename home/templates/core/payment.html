@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+	Cart Payment
+{% endblock %}
+{% block cssimport %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/responsive.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/cart_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/cart_responsive.css' %}">
+{% endblock cssimport %}
+
+{% block body %}
+
+	<!-- Cart -->
+
+	<div class="cart_section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-10 offset-lg-1">
+					<div class="cart_container">
+						<div class="cart_title">Cart Payment</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock body %}
+
+{% block jsimport %}
+    <script src="{% static 'js/cart_custom.js' %}"></script>
+{% endblock jsimport %}

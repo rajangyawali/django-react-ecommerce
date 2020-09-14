@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+	Order Summary
+{% endblock %}
+{% block cssimport %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/responsive.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/cart_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/cart_responsive.css' %}">
+{% endblock cssimport %}
+
+{% block body %}
+
+	<!-- Cart -->
+
+	<div class="cart_section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-10 offset-lg-1">
+					<div class="cart_container">
+						<div class="cart_title">Shopping Cart</div>
+						{% if order_products %}
+						<div class="cart_items">
+							<div class="table-responsive">
+								<table class="table table-hover">
+									<thead>
+										<td>Product</td>
+										<td>Name</td>
+										<td>Color</td>
+										<td>Quantity</td>
+										<td>Rate</td>
+										<td>Discount</td>
+										<td>Total</td>
+										<td></td>
+									</thead>
+									{% for o_p in order_products %}
+									<tr>
+										<td><div class="cart_item_image"><a href={% url 'core:product' o_p.product.slug %}><img src="{% static 'images/shopping_cart.jpg' %}" alt=""></a></div></td>
+										<td><div class="cart_item_text">{{o_p.product.name}}</div></td>
+										<td><div class="cart_item_text"><span style="background-color:#999999;"></span>Silver</div></td>
+										<td><div class="cart_item_text">
+												<a href="{% url 'core:update-product' o_p.product.slug 'decrease' %}"><button type="button" class="btn btn-secondary"><i class="fa fa-angle-down" aria-hidden="true"></i></button></a>
+												&nbsp;&nbsp;{{o_p.quantity}}&nbsp;&nbsp;
+												<a href="{% url 'core:update-product' o_p.product.slug 'increase' %}"><button type="button" class="btn btn-secondary"><i class="fa fa-angle-up" aria-hidden="true"></i></button></a>
+											</div>
+										</td>
+										<td><div class="cart_item_text">${{o_p.product.price}}</div></td>
+										<td><div class="cart_item_text">{{o_p.get_saving}}</div></td>
+										<td><div class="cart_item_text">${{o_p.get_final_price}}</div></td>
+										<td><div class="cart_item_text"><a href="{% url 'core:update-product' o_p.product.slug 'delete' %}"><button type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></a></div></td>
+									</tr>
+									{% endfor %}
+								</table>
+							</div>
+						</div>
+
+						<!-- Order Total -->
+						<div class="order_total">
+							<div class="order_total_content text-md-right">
+								<a href="{% url 'core:clear-cart' %}"><button type="button" class="btn btn-danger">Cart&nbsp;&nbsp;<i class="fa fa-trash" aria-hidden="true"></i></button>&nbsp;&nbsp;</a>
+								<div class="order_total_title">Order Total:</div>
+								<div class="order_total_amount">${{order.get_total}}</div>
+							</div>
+						</div>
+
+						<div class="cart_buttons">
+							<a href="{% url 'home' %}"><button type="button" class="button cart_button_clear">Continue Shopping</button></a>
+							<a href="{% url 'core:payment' %}"><button type="button" class="button cart_button_checkout">Proceed Payment</button></a>
+						</div>
+
+						{% else %}
+						<br><br>
+						<i>Your cart is currently empty !</i>
+						<div class="cart_buttons">
+							<a href="{% url 'home' %}"><button type="button" class="button cart_button_clear">Continue Shopping</button></a>
+						</div>
+						{% endif %}
+						
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock body %}
+
+{% block jsimport %}
+    <script src="{% static 'js/cart_custom.js' %}"></script>
+{% endblock jsimport %}
